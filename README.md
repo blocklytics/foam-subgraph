@@ -1,6 +1,6 @@
 # FOAM Subgraph
 
-[Foam](https://foam.space) provides the tools to enable a crowdsourced map and decentralized location services.
+[FOAM](https://foam.space) provides the tools to enable a crowdsourced map and decentralized location services.
 
 ## Networks and Performance
 
@@ -42,6 +42,26 @@ Below are a few ways to show how to query the Foam Subgraph for data. The querie
       rewardAmount
       rewardClaimed
     }
+  }
+}
+```
+
+### Querying Top 10 Users by Number of Points Added to the Map
+```graphql
+{
+  users(orderBy: numListingsWhitelisted, orderDirection: desc, first: 10) {
+    id
+    numListingsWhitelisted
+  }
+}
+```
+
+### Querying Top 10 Users by Amount Staked
+```graphql
+{
+  users(orderBy: totalAmountStaked, orderDirection: desc, first: 10) {
+    id
+    totalAmountStaked
   }
 }
 ```
