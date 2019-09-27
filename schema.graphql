@@ -1,0 +1,60 @@
+type Listing @entity {
+  id: ID! # listingHash
+  owner: User!
+  whitelisted: Boolean!
+  wasRemoved: Boolean!
+  wasWithdrawn: Boolean!
+  deposit: BigInt!
+  applicationExpiry: BigInt!
+  data: String
+}
+
+type Challenge @entity {
+  id: ID! # challengeID
+  listing: Listing
+  status: String! # one of "Pending", "Voting", "Revealing", "Successful", "Failed"
+  createdAtTimestamp: BigInt
+  creator: User
+  stake: BigInt
+  resolved: Boolean!
+  voteCommitEndTimestamp: BigInt!
+  voteRevealEndTimestamp: BigInt!
+  quorumRequired: BigInt!
+  totalNumberOfVotesCommitted: BigInt
+  totalNumberOfVotesRevealed: BigInt
+  totalVotesCommitted: BigInt
+  totalVotesRevealed: BigInt
+  totalNumberOfVotesFor: BigInt!
+  totalVotesFor: BigInt!
+  totalNumberOfVotesAgainst: BigInt!
+  totalVotesAgainst: BigInt!
+  votes: [Vote!]
+  committedUsers: [User!]
+  revealedUsers: [User!]
+  rewardPool: BigInt!
+  data: String
+}
+
+type User @entity {
+  id: ID! # ethereum address of user
+  numChallenges: BigInt!
+  numListingApplications: BigInt!
+  numListingsWhitelisted: BigInt!
+  numVotesCommitted: BigInt!
+  numVotesRevealed: BigInt!
+  totalAmountStaked: BigInt!
+  totalMapRewards: BigInt!
+}
+
+type Vote @entity {
+  id: ID! # challengeId + '_' + ethereum address of user
+  challenge: Challenge!
+  voter: User!
+  isRevealed: Boolean!
+  isChallengeResolved: Boolean!
+  isForChallenge: Boolean
+  voteAmount: BigInt!
+  wonChallenge: Boolean
+  rewardAmount: BigInt
+  rewardClaimed: Boolean!
+}
